@@ -1,0 +1,11 @@
+age,sex,job,housing,saving_accounts,checking_account,credit_amount,duration,purpose,risk
+67,male,2,own,little,little,1169,6,radio/TV,good
+22,female,2,own,little,moderate,5951,48,radio/TV,bad
+49,male,1,own,little,little,2096,12,education,good
+45,male,2,free,little,little,7882,42,furniture/equipment,good
+53,male,2,free,little,little,4870,24,car,bad
+35,male,1,free,little,moderate,9055,36,education,good
+53,male,2,own,quite rich,moderate,2835,24,furniture/equipment,good
+35,male,3,rent,little,moderate,6948,36,car,good
+61,male,1,own,rich,moderate,3059,12,radio/TV,good
+28,male,3,own,little,moderate,5234,30,car,bad

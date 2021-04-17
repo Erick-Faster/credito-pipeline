@@ -1,0 +1,65 @@
+version: '3.5'
+networks:
+    banco:
+    api:
+    training:
+services:
+    database:
+        container_name: postgres
+        image: postgres:latest
+        env_file: database.conf
+        ports:
+            - 5432:5432  
+        volumes:
+            - db_volume:/var/lib/postgresql
+        networks:
+            - banco
+    api:
+        container_name: api
+        image: python:3.6
+        volumes:
+            # Aplicacao
+            - ./app:/app
+            - ./trained_models:/app/trained_models #DELETAR DEPOIS DE IMPLEMENTAR REDIS
+        ports:
+            - 5050:5050
+        working_dir: /app #Diretorio de execucao do comando
+        command: bash ./app.sh #add bash pra dar permissao
+        networks:
+            - banco
+            - api
+            - training
+        depends_on:
+            - database #servico de banco de dados
+        env_file: database.conf
+    ml:
+        container_name: ml
+        image: python:3.6
+        volumes:
+            # Aplicacao
+            - ./ml:/ml
+            - ./trained_models:/ml/trained_models
+        ports:
+            - 6000:6000
+        working_dir: /ml #Diretorio de execucao do comando
+        command: bash ./app.sh #add bash pra dar permissao
+        networks:
+            - training
+        depends_on:
+            - api #servico de banco de dados
+    web:
+        container_name: web
+        image: python:3.8
+        volumes:
+            - ./web:/web
+        ports:
+            - 7860:7860
+        working_dir: /web
+        command: bash ./initialize.sh
+        networks:
+            - api
+        depends_on:
+            - api
+
+volumes:
+    db_volume:
